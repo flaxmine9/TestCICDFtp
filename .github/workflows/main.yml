@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    brahcnes:
+      - master   
+
+env:
+   DOTNET_VERSION: "6.0.x"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+           dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Restore
+        run: dotnet restore ./TestCICDFtp.sln
+
+      - name: Build
+        run: dotnet build ./TestCICDFtp.sln --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./TestCICDFtp.sln --configuration Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-restore
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+           name: Build
+           path: ./TestCICDFtp/bin/Release/net6.0-windows/win-x64/publish
