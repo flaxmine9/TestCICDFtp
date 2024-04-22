@@ -1,15 +1,16 @@
-name: Build and deploy
+name: Build
+
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - master
+    brahcnes:
+      - master   
 
 env:
    DOTNET_VERSION: "6.0.x"
 
 jobs:
   build:
-    name: Build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
