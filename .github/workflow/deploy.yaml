@@ -18,16 +18,16 @@ jobs:
         with:
            dotnet-version: ${{ env.DOTNET_VERSION }}
       - name: Restore
-        run: dotnet restore ./TestCICDWpf.sln
+        run: dotnet restore ./TestCICDFtp.sln
 
       - name: Build
-        run: dotnet build ./TestCICDWpf.sln --configuration Release --no-restore
+        run: dotnet build ./TestCICDFtp.sln --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./TestCICDWpf.sln --configuration Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-restore
+        run: dotnet publish ./TestCICDFtp.sln --configuration Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-restore
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
            name: Build
-           path: ./TestCICDWpf/bin/Release/net6.0-windows/win-x64/publish
+           path: ./TestCICDFtp/bin/Release/net6.0-windows/win-x64/publish
